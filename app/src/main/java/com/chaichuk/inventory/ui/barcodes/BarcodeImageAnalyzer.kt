@@ -7,7 +7,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import timber.log.Timber
 
-private class BarcodeImageAnalyzer : ImageAnalysis.Analyzer {
+class BarcodeImageAnalyzer : ImageAnalysis.Analyzer {
 
     override fun analyze(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
