@@ -1,5 +1,7 @@
 package com.chaichuk.inventory.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
 import android.view.View
