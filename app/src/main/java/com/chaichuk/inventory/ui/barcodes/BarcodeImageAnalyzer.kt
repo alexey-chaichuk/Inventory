@@ -7,7 +7,8 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import timber.log.Timber
 
-class BarcodeImageAnalyzer : ImageAnalysis.Analyzer {
+class BarcodeImageAnalyzer (val reporter: BarcodeReporter)
+    : ImageAnalysis.Analyzer {
 
     override fun analyze(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
@@ -25,6 +26,11 @@ class BarcodeImageAnalyzer : ImageAnalysis.Analyzer {
                         Timber.d("rawValue: %s", rawValue)
                         Timber.d("valueType: %s", valueType)
 
+                        reporter.reportValue(rawValue.toString())
+                        bounds?.let {
+                            reporter.reportBoundingBox(bounds)
+                        }
+
                         when (valueType) {
                             Barcode.TYPE_WIFI -> {
                                 val ssid = barcode.wifi!!.ssid
@@ -39,8 +45,10 @@ class BarcodeImageAnalyzer : ImageAnalysis.Analyzer {
                     }
                 }
                 .addOnFailureListener {
-                    // Task failed with an exception
-                    // ...
+                    it.printStackTrace()
+                }
+                .addOnCompleteListener {
+                    imageProxy.close()
                 }
 
         }

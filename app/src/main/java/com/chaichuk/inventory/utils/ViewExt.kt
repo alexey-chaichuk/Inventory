@@ -1,6 +1,8 @@
 package com.chaichuk.inventory.utils
 
+import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 
@@ -52,5 +54,11 @@ fun View.showSnackbar(
         snackbar.setAction(actionMessage) {
             action(this)
         }.show()
+    }
+}
+
+fun Context.showToast(message: String?, length: Int = Toast.LENGTH_SHORT) {
+    message?.let {
+        Toast.makeText(this, it, length).show()
     }
 }
